@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="">
+        <title>App</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="module">
+            // chercher la bonne version de vue
+            // dans les accolades on vient directement chercher ce que l'on veux
+            import { h, createApp } from "./node_modules/vue/dist/vue.esm-browser.prod.js"
+            
+            const Login = {
+                data(){
+                    return {
+                        username: "",
+                        password: ""
+                    }
+                },
+                methods:{
+                    submit(event){
+                        alert(`Nom d'utilisateur : ${this.username} / Mot de passe : ${this.password}`)
+                    }
+                },
+                render(){
+                    // dom virtuel
+                    return h('form', {onSubmit: this.submit} ,[
+                        h('div',[
+                            // h(type, tous les éléments qui suivent dont id type placeholder...)
+                            h('label', {for: 'username'}, "Nom d'utilisateur : "),
+                            // h(type, tous les éléments qui suivent dont id type placeholder...)
+                            h('input', {
+                                id:'username', 
+                                type:'text', 
+                                placeholder: 'username',
+                                value: this.username,
+                                //Mettre a jour la valeur
+                                onInput: event => this.username = event.target.value
+                            })
+                        ]),
+                        h('div',[
+                            h('label', {for: 'password'}, 'Mot de passe : '),
+                            h('input',{
+                                id: 'password',
+                                type: 'password',
+                                placeholder: 'Password',
+                                value: this.password,
+                                onInput: event => this.password = event.target.value
+                            })
+                        ]),
+                        // h(type, tous les éléments qui suivent dont id type placeholder...)
+                        h('button',{type: 'submit'}, 'Se connecter')
+                    ])
+                }
+            }
+
+            createApp(Login).mount('#root')
+        </script>
+    </body>
+</html>
